@@ -5,36 +5,29 @@ Imprimir a lista de crianças agrupadas por sala
 que frequentam cada uma das atividades.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 # Dados 
-sala1 = ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"]
-sala2 = ["João", "Antonio", "Carlos", "Maria", "Isolda"]
+# versão de lista e sets para dicionarios
 
-aula_ingles = ["Erik", "Maia","Joana", "Carlos","Antonio"]
-aula_musica = ["Erik", "Carlos", "Maria"]
-aula_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
+alunos = {
+    "sala1": ["Erik", "Maia", "Gustavo", "Manuel", "Sofia", "Joana"],
+    "sala2": ["João", "Antonio", "Carlos", "Maria", "Isolda"],
+}
 
-# Identificar melhor usando tuplas dentro da lista e labels
-atividades = [
-    ("Ingles",aula_ingles), 
-    ("Música",aula_musica), 
-    ("Dança", aula_danca),
-]
+atividades = {
+    "Ingles": ["Erik", "Maia", "Joana", "Carlos", "Antonio"],
+    "Musica": ["Erik", "Carlos", "Maria"],
+    "Danca": ["Gustavo", "Sofia", "Joana", "Antonio"]
+}
 
-# Listar alunos em cada atividade por sala
-
-for nome_atividade, atividade in atividades: # interação vai rodar para cada tipo de aula (
-                              # ingles, musica, dança)
-    print(f"Alunos da atividade {nome_atividade}\n")
-    print("-" * 50)
-# sala1 que tem interse├º├úo com a atividade
-    atividade_sala1 = set(sala1) & set(atividade)
-    atividade_sala2 = set(sala2) & set(atividade)
-
-    print("Sala1", atividade_sala1)
-    print("Sala2", atividade_sala2)
+# Função para listar alunos por atividade
+for atividade, inscritos in atividades.items():
+    print(f"Atividade: {atividade}")
+    for sala, alunos_sala in alunos.items():
+        alunos_na_atividade = set(inscritos).intersection(alunos_sala)
+        if alunos_na_atividade:
+            print(f"  {sala}: {', '.join(alunos_na_atividade)}")
     print()
-    print("#" * 50)
-            
+
 
