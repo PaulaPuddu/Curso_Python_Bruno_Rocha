@@ -15,14 +15,37 @@ Execution
     python3 hello.py
     ou ./hello.py
 """
-__version__="0.0.1"
+__version__="0.1.3"
 __author__= "Ana Paula"
 __license__= "Unlicense"
 
 
 import os
+import sys
+
+arguments = {
+    'lang': None,
+    'count':1,
+}
+for arg in sys.argv[1:]:
+    # TO DO: Tratar ValueError
+    key, value = arg.split("=")
+    key = key.lstrip("-").strip()
+    value = value.strip()
+    if key not in arguments:
+        print(f"Invalid Option {key}")
+        sys.exit()
+    arguments[key] = value
+    
 #Dunder =  tem dois underlines inicio e fim
-current_language = os.getenv("LANG", "en_US")[:5]
+current_language = arguments ["lang"]
+if current_language is None:
+     current_language = os.getenv("LANG")
+     # TODO: Usar repetição
+     if current_language is None:
+            current_language = input("Choose a language:")
+
+current_language = current_language[:5]
 # snake case = current_language
 # Pascal Case = Current_Language
 
@@ -34,9 +57,4 @@ msg = {
     "fr_FR": "Bonjour,Monde!",
 }
 
-# Set implementa (Hash Table) velocidade de O(1) - constante acesso direto - Otimiza a busca
-
-# Ordem de complexidade O(n) - Ordem de elementos que se precisa pesquisar
-
-#O(1) velocidade constante
-print(msg[current_language]) #built- in - ja vem prontinho no python
+print(msg[current_language] * int(arguments["count"]))
